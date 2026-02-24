@@ -1,4 +1,0 @@
-def get_username(user):
-    return user["name"].lower()
-
-print(get_username(None))
