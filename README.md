@@ -57,79 +57,73 @@
 
 ## 🚀 Quick Start
 
-**1. Create a workflow in your repository**
+### 1. Copy to Your Repository
 
-**Create a file:**
+```bash
+# Copy workflows
+cp -r .github/workflows /path/to/your/repo/.github/
 
-.github/workflows/repogent.yml
+# Copy scripts
+cp -r scripts /path/to/your/repo/
 
-## 2. Add this workflow code
+# Copy config
+cp -r config /path/to/your/repo/
+
+# Copy requirements
+cp requirements.txt /path/to/your/repo/
+```
+
+### 2. Add Secret
+
+Go to: **Settings** → **Secrets** → **Actions**
+
+Add: `GROQ_API_KEY` from https://console.groq.com
+
+### 3. Enable Permissions
+
+**Settings** → **Actions** → **General** → **Workflow permissions**
+
+Select: ✅ **Read and write permissions**
+
+#### Required Permissions
+
+The workflows require the following GitHub permissions:
+
+| Workflow | Permissions Required |
+|----------|---------------------|
+| **PR Review** | `contents: read`, `pull-requests: write` |
+| **Issue Triage** | `issues: write`, `contents: read` |
+| **Community Assistant** | `issues: write`, `contents: read` |
+| **CI/CD Monitor** | `contents: read`, `actions: read`, `issues: write`, `pull-requests: write` |
+| **Orchestrator** | `contents: read`, `issues: write`, `pull-requests: write`, `actions: read` |
+
+**Note:** If using the composite action (`action.yaml`), ensure your workflow grants these permissions:
+
 ```yaml
-name: Repogent AI Automation
-
-on:
-  pull_request:
-  issues:
-  issue_comment:
-
 permissions:
   contents: read
   issues: write
   pull-requests: write
-  actions: read
-
-jobs:
-  repogent:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run Repogent
-        uses: harry1634/Repogent@main
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          groq-key: ${{ secrets.GROQ_API_KEY }}
+  actions: read  # Only needed for CI/CD monitoring
 ```
 
-**3. Add your Groq API key**
+## 📖 Usage
 
-**Go to:**
+- **PR Review**: Open a PR → Get inline comments automatically
+- **Issue Triage**: Create issue → Auto-labeled with explanation  
+- **Smart Responses**: Comment on issue → AI responds
+- **Community Help**: Mention `@repogent` with your question → Get answers with code references
+- **CI/CD Monitoring**: Build fails → Automatic analysis posted to PR
 
-## Settings → Secrets and variables → Actions
+### 🚨 CI/CD Agent Examples
 
+When a build fails, the CI/CD Agent automatically:
 
-## Add a new secret:**
+1. **Detects the failure** type (test, compile, dependency, etc.)
+2. **Analyzes the logs** to extract specific errors
+3. **Identifies root cause** (which commit/file)
+4. **Posts detailed report** to the PR:
 
-Name: GROQ_API_KEY
-
-Value: your_groq_api_key
-
-
-## **Get a key from:**
-
-https://console.groq.com
-
-## 4. Enable workflow permissions**
-
-**Go to:**
-
-**Settings → Actions → General**
-
-
-**Under Workflow permissions, select:**
-
-**Read and write permissions**
-
-
-Save the changes.
-
-**5. Start using Repogent**
-
-Now the automation works automatically.
-
-**Open a Pull Request →** AI review comments appear
-
-**Create an Issue →** Auto-classified and labeled
-
-**Comment on issues →** AI responds
 ```markdown
 ## 🔴 CI/CD Build Failed
 
@@ -247,17 +241,7 @@ Apache 2.0 License
 
 ## 👤 Author
 
-P.Saiteja
-
-
-GitHub user name : harry1634
+vijayabhaskar78
 
 ---
 **⚡ Powered by Groq**
-
-
-
-
-
-
-
